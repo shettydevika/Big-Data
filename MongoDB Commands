@@ -1,0 +1,105 @@
+MongoDB Commands:
+
+Inserting documents
+db.employees.insertMany([
+  {empId: 1, name: 'Clark', dept: 'Sales'},
+  {empId: 2, name: 'Dave', dept: 'Accounting'},
+  {empId: 3, name: 'Ava', dept: 'Sales'},
+  ]);
+  
+  db.employees.find({dept: 'Sales'});
+  
+
+  Output:
+
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("6638907307a08e1363827992"),
+		ObjectId("6638907307a08e1363827993"),
+		ObjectId("6638907307a08e1363827994")
+	]
+}
+{ "_id" : ObjectId("6638907307a08e1363827992"), "empId" : 1, "name" : "Clark", "dept" : "Sales" }
+{ "_id" : ObjectId("6638907307a08e1363827994"), "empId" : 3, "name" : "Ava", "dept" : "Sales" }
+
+--------------------------------------------------------------------------------------------------------------------------
+Updating documents
+db.employees.insertMany([
+  {empId: 1, name: 'Clark', dept: 'Sales'},
+  {empId: 2, name: 'Dave', dept: 'Accounting'},
+  {empId: 3, name: 'Ava', dept: 'Sales'},
+  ]);
+  
+ db.employees.updateMany(   
+  { dept: 'Sales'},
+  { $set: { region: "US" } }
+);
+
+db.employees.updateOne(   
+  {empId: 2 },
+  { $set: { region: "Asia" } }
+);
+
+db.employees.find({dept: 'Sales'});
+db.employees.find({empId: 2});
+
+Output:
+
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("6638920392e8f9705be089c4"),
+		ObjectId("6638920392e8f9705be089c5"),
+		ObjectId("6638920392e8f9705be089c6")
+	]
+}
+{ "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+{ "_id" : ObjectId("6638920392e8f9705be089c4"), "empId" : 1, "name" : "Clark", "dept" : "Sales", "region" : "US" }
+{ "_id" : ObjectId("6638920392e8f9705be089c6"), "empId" : 3, "name" : "Ava", "dept" : "Sales", "region" : "US" }
+{ "_id" : ObjectId("6638920392e8f9705be089c5"), "empId" : 2, "name" : "Dave", "dept" : "Accounting", "region" : "Asia" }
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Deleting documents
+db.employees.insertMany([
+  {empId: 1, name: 'Clark', dept: 'Sales'},
+  {empId: 2, name: 'Dave', dept: 'Accounting'},
+  {empId: 3, name: 'Ava', dept: 'Sales'},
+  ]);
+  
+  //db.employees.find({dept: 'Sales'});
+  
+ db.employees.updateMany(   
+  { dept: 'Sales'},
+  { $set: { region: "US" } }
+);
+
+db.employees.updateOne(   
+  {empId: 2 },
+  { $set: { region: "Asia" } }
+);
+
+db.employees.find({dept: 'Sales'});
+db.employees.find({empId: 2 });
+
+db.employees.deleteOne({ empId: 1})
+
+Output:
+
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("663892d0511a9b7c554b02d4"),
+		ObjectId("663892d0511a9b7c554b02d5"),
+		ObjectId("663892d0511a9b7c554b02d6")
+	]
+}
+{ "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+{ "_id" : ObjectId("663892d0511a9b7c554b02d4"), "empId" : 1, "name" : "Clark", "dept" : "Sales", "region" : "US" }
+{ "_id" : ObjectId("663892d0511a9b7c554b02d6"), "empId" : 3, "name" : "Ava", "dept" : "Sales", "region" : "US" }
+{ "_id" : ObjectId("663892d0511a9b7c554b02d5"), "empId" : 2, "name" : "Dave", "dept" : "Accounting", "region" : "Asia" }
+{ "acknowledged" : true, "deletedCount" : 1 }
+
+---------------------------------------------------------------------------------------------------------------------------------
